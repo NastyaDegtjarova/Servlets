@@ -1,7 +1,7 @@
 package net.proselyte.controller;
 
-import org.hibernate.SessionFactory;
-import org.hibernate.cfg.Configuration;
+import net.proselyte.dao.ProductDAO;
+import net.proselyte.dao.hibernate.HibernateProductDAOImpl;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -10,18 +10,19 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
- * Created by Nastya on 13.12.2017.
+ * Created by Анастасия on 27.12.2017.
  */
-public class FrontServlet extends HttpServlet {
-    private SessionFactory sessionFactory;
+public class ProductServlet extends HttpServlet {
+    private ProductDAO manufacturerDAO = HibernateProductDAOImpl.getInstance();
     @Override
+
     public void init() throws ServletException {
-        sessionFactory = new Configuration().configure().buildSessionFactory();
+
     }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        resp.setContentType("text/html");
-        resp.getWriter().print("<h1>Hello "+sessionFactory+"</h1>");
+        //manufacturerDAO.getAll();
+        req.getRequestDispatcher("/products.jsp").forward(req, resp);
     }
 }
