@@ -37,7 +37,7 @@ public class HibernateManufacturerDAOImpl implements ManufacturerDAO {
         }
     }
 
-    public void update(Manufacturer manufacturer) throws SQLException {
+    public void update(Manufacturer manufacturer) {
         Transaction transaction = null;
         try (Session session = this.sessionFactory.openSession()) {
             transaction = session.beginTransaction();

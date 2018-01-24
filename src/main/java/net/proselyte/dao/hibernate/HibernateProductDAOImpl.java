@@ -37,7 +37,7 @@ public class HibernateProductDAOImpl implements ProductDAO {
         }
     }
 
-    public void update(Product product) throws SQLException {
+    public void update(Product product) {
         Transaction transaction = null;
         try(Session session = this.sessionFactory.openSession()){
         transaction = session.beginTransaction();

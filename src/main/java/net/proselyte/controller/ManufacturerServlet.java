@@ -1,11 +1,8 @@
 package net.proselyte.controller;
 
 import net.proselyte.dao.ManufacturerDAO;
-import net.proselyte.dao.ProductDAO;
 import net.proselyte.dao.hibernate.HibernateManufacturerDAOImpl;
-import net.proselyte.dao.hibernate.HibernateProductDAOImpl;
 import net.proselyte.model.Manufacturer;
-import net.proselyte.model.Product;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -15,15 +12,15 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.List;
 
 /**
- * Created by Анастасия on 27.12.2017.
+ * Created by Nastya on 20.12.2017.
  */
-@WebServlet(urlPatterns = "/prod")
-public class ProductServlet extends HttpServlet {
-    private static final Logger logger = LogManager.getLogger(ProductServlet.class);
-    private ProductDAO productDAO = HibernateProductDAOImpl.getInstance();
-
+@WebServlet(urlPatterns = "/manuf")
+public class ManufacturerServlet extends HttpServlet {
+    private static final Logger logger = LogManager.getLogger(ManufacturerServlet.class);
+    private ManufacturerDAO manufacturerDAO = HibernateManufacturerDAOImpl.getInstance();
     @Override
 
     public void init() throws ServletException {
@@ -34,26 +31,26 @@ public class ProductServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         try {
             Long id = Long.parseLong(req.getParameter("id"));
-            Product product = productDAO.getById(id);
-            req.setAttribute("prod", product);
-            req.getRequestDispatcher("/editProd.jsp").forward(req, resp);
+            Manufacturer manufacturer = manufacturerDAO.getById(id);
+            req.setAttribute("manuf", manufacturer);
+            req.getRequestDispatcher("/editManuf.jsp").forward(req, resp);
         } catch(Exception e) {
             req.getRequestDispatcher("/error.jsp").forward(req, resp);
         }
     }
 
-    private void forwardToProds(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.getRequestDispatcher("/prods").forward(req, resp);
+    private void forwardToManufs(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        req.getRequestDispatcher("/manufs").forward(req, resp);
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String name = req.getParameter("name");
         if (name != null && !name.isEmpty()) {
-            productDAO.save(new Product(name));
+            manufacturerDAO.save(new Manufacturer(name));
             System.out.println("save");
         }
-        forwardToProds(req, resp);
+        forwardToManufs(req, resp);
     }
 
     @Override
@@ -70,10 +67,10 @@ public class ProductServlet extends HttpServlet {
         }
         try {
             long id = Long.parseLong(idParam);
-            Product product = productDAO.getById(id);
-            product.setNameProduct(name);
-            productDAO.save(product);
-            forwardToProds(req, resp);
+            Manufacturer manufacturer = manufacturerDAO.getById(id);
+            manufacturer.setNameManufact(name);
+            manufacturerDAO.save(manufacturer);
+            forwardToManufs(req, resp);
         } catch (Exception e) {
             req.getRequestDispatcher("/error.jsp").forward(req, resp);
         }

@@ -9,14 +9,32 @@
 
 	<body>
 	<h1><p>Manufacturers</p></h1>
-	<button onclick="location.href='http://www.google.com'" type="button">
-     www.google.com</button>
+    <table border="1">
+    <tr><th>Name</th><th></th><th></th></tr>
      <c:forEach items="${requestScope.manufs}" var="manuf">
-
-        <p>${manuf}</p>
-        <p><c:out value="${requestScope.manufs}"></c:out></p>
+     <tr>
+        <td>
+            <p>${manuf.nameManufact}</p>
+        </td>
+        <td>
+            <form action = "/manuf" method="get">
+                <input type = "submit" value = "Edit"/>
+                <input type="hidden" name="id" value="${manuf.idManufact}"/>
+            </form>
+        </td>
+        <td>
+            <form action = "/manuf" method="delete">
+                <input type = "submit" value = "Delete"/>
+            </form>
+        </td>
+     </tr>
      </c:forEach>
-	 <p></p>
+
+</table>
+            <form action = "/saveManuf.jsp" method="post">
+                <input type = "submit" value = "New company"/>
+            </form>
+<%--	 <p></p>
 	<a href = 'createManufacturer.html'><input type = "button" value = "create Manufacturer"/></a>
 	<p></p>
 	<a href = 'updateManufacturer.html'><input type = "button" value = "update Manufacturer"/></a>
@@ -25,7 +43,7 @@
 	<p></p>
 	<a href = 'deleteManufacturer.html'><input type = "button" value = "delete Manufacturer"/></a>
 	<p></p>
-	<p></p>
+	<p></p> --%>
 
 
 	  <select multiple = "true">
