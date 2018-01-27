@@ -1,8 +1,11 @@
 package net.proselyte.controller;
 
 import net.proselyte.dao.ManufacturerDAO;
+import net.proselyte.dao.ProductDAO;
 import net.proselyte.dao.hibernate.HibernateManufacturerDAOImpl;
+import net.proselyte.dao.hibernate.HibernateProductDAOImpl;
 import net.proselyte.model.Manufacturer;
+import net.proselyte.model.Product;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -12,14 +15,17 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.List;
 
 /**
- * Created by Nastya on 20.12.2017.
+ * Created by Анастасия on 27.12.2017.
  */
-@WebServlet(urlPatterns = "/manuf")
-public class ManufacturerServlet extends HttpServlet {
-    private static final Logger logger = LogManager.getLogger(ManufacturerServlet.class);
+@WebServlet(urlPatterns = "/saveProd")
+public class SaveProductServlet extends HttpServlet {
+    private static final Logger logger = LogManager.getLogger(SaveProductServlet.class);
+    private ProductDAO productDAO = HibernateProductDAOImpl.getInstance();
     private ManufacturerDAO manufacturerDAO = HibernateManufacturerDAOImpl.getInstance();
+
     @Override
 
     public void init() throws ServletException {
@@ -30,16 +36,18 @@ public class ManufacturerServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         try {
             Long id = Long.parseLong(req.getParameter("id"));
-            Manufacturer manufacturer = manufacturerDAO.getById(id);
-            req.setAttribute("manuf", manufacturer);
-            req.getRequestDispatcher("/editManuf.jsp").forward(req, resp);
+            Product product = productDAO.getById(id);
+            List<Manufacturer> manufacturers = manufacturerDAO.getAll();
+            req.setAttribute("prod", product);
+            req.setAttribute("manufs", manufacturers);
+            req.getRequestDispatcher("/saveProd.jsp.jsp").forward(req, resp);
         } catch(Exception e) {
             req.getRequestDispatcher("/error.jsp").forward(req, resp);
         }
     }
 
-    private void forwardToManufs(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.getRequestDispatcher("/manufs").forward(req, resp);
+    private void forwardToProds(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        req.getRequestDispatcher("/prods").forward(req, resp);
     }
 
     @Override
@@ -77,9 +85,9 @@ public class ManufacturerServlet extends HttpServlet {
         }
         try {
             long id = Long.parseLong(idParam);
-            Manufacturer manufacturer = manufacturerDAO.getById(id);
-            manufacturerDAO.delete(manufacturer);
-            forwardToManufs(req, resp);
+            Product product = productDAO.getById(id);
+            productDAO.delete(product);
+            forwardToProds(req, resp);
         } catch (Exception e) {
             req.setAttribute("errMessage", e.getMessage());
             req.getRequestDispatcher("/error.jsp").forward(req, resp);
@@ -89,10 +97,16 @@ public class ManufacturerServlet extends HttpServlet {
     private void save(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String name = req.getParameter("name");
         if (name != null && !name.isEmpty()) {
-            manufacturerDAO.save(new Manufacturer(name));
+            productDAO.save(new Product(name));
             System.out.println("save");
         }
-        forwardToManufs(req, resp);
+
+        name = req.getParameter("name");
+        if (name != null && !name.isEmpty()) {
+            productDAO.save(new Product(name));
+            System.out.println("save");
+        }
+        forwardToProds(req, resp);
     }
 
     private void update(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -112,10 +126,10 @@ public class ManufacturerServlet extends HttpServlet {
         }
         try {
             long id = Long.parseLong(idParam);
-            Manufacturer manufacturer = manufacturerDAO.getById(id);
-            manufacturer.setNameManufact(name);
-            manufacturerDAO.update(manufacturer);
-            forwardToManufs(req, resp);
+            Product product = productDAO.getById(id);
+            product.setNameProduct(name);
+            productDAO.update(product);
+            forwardToProds(req, resp);
         } catch (Exception e) {
             req.setAttribute("errMessage", e.getMessage());
             req.getRequestDispatcher("/error.jsp").forward(req, resp);

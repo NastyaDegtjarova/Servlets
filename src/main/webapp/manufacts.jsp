@@ -23,7 +23,9 @@
             </form>
         </td>
         <td>
-            <form action = "/manuf" method="delete">
+            <form action = "/manuf" method="post">
+                <input type = "hidden" name="action" value = "delete"/>
+                <input type = "hidden" name="id" value="${manuf.idManufact}"/>
                 <input type = "submit" value = "Delete"/>
             </form>
         </td>
@@ -32,31 +34,9 @@
 
 </table>
             <form action = "/saveManuf.jsp" method="post">
+                <input type = "hidden" name="action" value = "save"/>
                 <input type = "submit" value = "New company"/>
             </form>
-<%--	 <p></p>
-	<a href = 'createManufacturer.html'><input type = "button" value = "create Manufacturer"/></a>
-	<p></p>
-	<a href = 'updateManufacturer.html'><input type = "button" value = "update Manufacturer"/></a>
-	<p></p>
-	<a href = 'showAllManufacturer.html'><input type = "button" value = "showAll Manufacturer"/></a>
-	<p></p>
-	<a href = 'deleteManufacturer.html'><input type = "button" value = "delete Manufacturer"/></a>
-	<p></p>
-	<p></p> --%>
 
-
-	  <select multiple = "true">
-	  <option></option>
-	  <option></option>
-	  <option></option>
-	  <input type = "submit" value = "send"/>
-	  <input type = "text/">
-	  <form></form>
-	  <form action = "/manufacturer/delete">
-	  <select name = "name">
-
-	  </select>
-		<p></p>
 	</body>
 </html>

@@ -25,7 +25,7 @@ public class ManufacturersServlet extends HttpServlet {
     }
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         List<Manufacturer> manufacturers = manufacturerDAO.getAll();
         req.setAttribute("manufs", manufacturers);
         req.getRequestDispatcher("/manufacts.jsp").forward(req, resp);

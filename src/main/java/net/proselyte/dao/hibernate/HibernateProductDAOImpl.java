@@ -26,10 +26,10 @@ public class HibernateProductDAOImpl implements ProductDAO {
 
     public void save(Product product) {
         Transaction transaction = null;
-       try(Session session = this.sessionFactory.openSession()){
-        transaction = session.beginTransaction();
-        session.save(product);
-        transaction.commit();
+        try (Session session = this.sessionFactory.openSession()) {
+            transaction = session.beginTransaction();
+            session.save(product);
+            transaction.commit();
         } catch (HibernateException e) {
             if (transaction != null) {
                 transaction.rollback();
@@ -39,11 +39,11 @@ public class HibernateProductDAOImpl implements ProductDAO {
 
     public void update(Product product) {
         Transaction transaction = null;
-        try(Session session = this.sessionFactory.openSession()){
-        transaction = session.beginTransaction();
+        try (Session session = this.sessionFactory.openSession()) {
+            transaction = session.beginTransaction();
 
-        session.update(product);
-        transaction.commit();
+            session.update(product);
+            transaction.commit();
         } catch (HibernateException e) {
             if (transaction != null) {
                 transaction.rollback();
@@ -52,7 +52,7 @@ public class HibernateProductDAOImpl implements ProductDAO {
     }
 
     public Product getById(Long id) {
-        try(Session session = this.sessionFactory.openSession()) {
+        try (Session session = this.sessionFactory.openSession()) {
             Product product = session.get(Product.class, id);
             if (product != null) {
                 Hibernate.initialize(product.getManufacturer());
@@ -63,11 +63,11 @@ public class HibernateProductDAOImpl implements ProductDAO {
 
     public void delete(Product product) {
         Transaction transaction = null;
-        try(Session session = this.sessionFactory.openSession()){
-        transaction = session.beginTransaction();
+        try (Session session = this.sessionFactory.openSession()) {
+            transaction = session.beginTransaction();
 
-        session.delete(product);
-        transaction.commit();
+            session.delete(product);
+            transaction.commit();
         } catch (HibernateException e) {
             if (transaction != null) {
                 transaction.rollback();
@@ -76,7 +76,7 @@ public class HibernateProductDAOImpl implements ProductDAO {
     }
 
     public List<Product> getAll() {
-        try(Session session = this.sessionFactory.openSession()) {
+        try (Session session = this.sessionFactory.openSession()) {
             Query query = session.createQuery("FROM Product p");
             List<Product> result = query.list();
             for (Product product : result) {

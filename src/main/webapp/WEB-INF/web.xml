@@ -11,18 +11,10 @@
     <servlet-class>net.proselyte.controller.FrontServlet</servlet-class>
   </servlet>
 
-  <servlet>
-    <servlet-name>producs</servlet-name>
-    <servlet-class>net.proselyte.controller.ProductServlet</servlet-class>
-  </servlet>
 
   <servlet-mapping>
     <servlet-name>serv</servlet-name>
     <url-pattern>/serv</url-pattern>
   </servlet-mapping>
 
-  <servlet-mapping>
-    <servlet-name>producs</servlet-name>
-    <url-pattern>/producs</url-pattern>
-  </servlet-mapping>
 </web-app>

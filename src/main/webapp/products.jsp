@@ -14,16 +14,18 @@
      <c:forEach items="${requestScope.prods}" var="prod">
      <tr>
         <td>
-            <p>${prod.nameProd}</p>
+            <p>${prod.nameProduct}</p>
         </td>
         <td>
             <form action = "/prod" method="get">
                 <input type = "submit" value = "Edit"/>
-                <input type="hidden" name="id" value="${prod.idProd}"/>
+                <input type="hidden" name="id" value="${prod.idProduct}"/>
             </form>
         </td>
         <td>
-            <form action = "/prod" method="delete">
+            <form action = "/prod" method="post">
+                <input type = "hidden" name="action" value = "delete"/>
+                <input type = "hidden" name="id" value="${prod.idProduct}"/>
                 <input type = "submit" value = "Delete"/>
             </form>
         </td>
@@ -31,32 +33,10 @@
      </c:forEach>
 
 </table>
-            <form action = "/saveProd.jsp" method="post">
-                <input type = "submit" value = "New company"/>
+            <form action = "/saveProd" method="post">
+                <input type = "hidden" name="action" value = "save"/>
+                <input type = "submit" value = "New product"/>
             </form>
-<%--	 <p></p>
-	<a href = 'createProduct.html'><input type = "button" value = "create Product"/></a>
-	<p></p>
-	<a href = 'updateProduct.html'><input type = "button" value = "update Product"/></a>
-	<p></p>
-	<a href = 'showAllProduct.html'><input type = "button" value = "showAll Product"/></a>
-	<p></p>
-	<a href = 'deleteProduct.html'><input type = "button" value = "delete Product"/></a>
-	<p></p>
-	<p></p> --%>
 
-
-	  <select multiple = "true">
-	  <option></option>
-	  <option></option>
-	  <option></option>
-	  <input type = "submit" value = "send"/>
-	  <input type = "text/">
-	  <form></form>
-	  <form action = "/manufacturer/delete">
-	  <select name = "name">
-
-	  </select>
-		<p></p>
 	</body>
 </html>

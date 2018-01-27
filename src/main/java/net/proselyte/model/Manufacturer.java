@@ -52,7 +52,7 @@ public class Manufacturer {
         return nameManufact;
     }
 
-    public void setNameManufact(String firstNameCust) {
+    public void setNameManufact(String nameManufact) {
         this.nameManufact = nameManufact;
     }
 
