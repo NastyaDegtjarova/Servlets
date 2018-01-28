@@ -20,7 +20,7 @@ public class Product {
     private String nameProduct;
 
     @Column(name = "PRICE_PRODUCT")
-    private BigDecimal priceProduct;
+    private BigDecimal priceProduct = BigDecimal.ZERO;
 
     @ManyToOne
     @JoinColumn(name="ID_MANUFACTURER", nullable=false)
@@ -36,6 +36,12 @@ public class Product {
     public Product(Long idProduct, String nameProduct) {
         this.idProduct = idProduct;
         this.nameProduct = nameProduct;
+    }
+
+    public Product(String nameProduct, BigDecimal priceProduct, Manufacturer manufacturer) {
+        this.nameProduct = nameProduct;
+        this.priceProduct = priceProduct;
+        this.manufacturer = manufacturer;
     }
 
     public Product(Long idProduct) {
