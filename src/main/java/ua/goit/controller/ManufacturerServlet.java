@@ -28,7 +28,7 @@ public class ManufacturerServlet extends AbstractBaseServlet {
             Long id = Long.parseLong(req.getParameter("id"));
             Manufacturer manufacturer = manufacturerDAO.getById(id);
             req.setAttribute("manuf", manufacturer);
-            req.getRequestDispatcher("/editManuf.jsp").forward(req, resp);
+            req.getRequestDispatcher(EDIT_MANUF_JSP).forward(req, resp);
         } catch(Exception e) {
             req.getRequestDispatcher(ERROR_JSP).forward(req, resp);
         }

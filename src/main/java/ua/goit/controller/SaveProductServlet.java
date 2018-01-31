@@ -19,6 +19,8 @@ import java.util.List;
 @WebServlet(urlPatterns = "/saveProd")
 public class SaveProductServlet extends HttpServlet {
     private static final Logger LOGGER = LogManager.getLogger(SaveProductServlet.class);
+    public static final String EDIT_PROD_JSP = "/editProd.jsp";
+    public static final String SAVE_PROD_JSP = "/saveProd.jsp";
     private ProductDAO productDAO = HibernateProductDAOImpl.getInstance();
     private ManufacturerDAO manufacturerDAO = HibernateManufacturerDAOImpl.getInstance();
 
@@ -32,10 +34,10 @@ public class SaveProductServlet extends HttpServlet {
         try {
             List<Manufacturer> manufacturers = manufacturerDAO.getAll();
             req.setAttribute("manufs", manufacturers);
-            req.getRequestDispatcher("/saveProd.jsp").forward(req, resp);
+            req.getRequestDispatcher(SAVE_PROD_JSP).forward(req, resp);
         } catch(Exception e) {
             req.setAttribute("errMessage", e.getMessage());
-            req.getRequestDispatcher("/error.jsp").forward(req, resp);
+            req.getRequestDispatcher(AbstractBaseServlet.ERROR_JSP).forward(req, resp);
         }
     }
     @Override
@@ -49,10 +51,10 @@ public class SaveProductServlet extends HttpServlet {
             Manufacturer manufacturer = manufacturerDAO.getById(Long.parseLong(req.getParameter("id")));
             req.setAttribute("manufIdSelect", manufacturer.getIdManufact());
             req.setAttribute("manufNameSelect", manufacturer.getNameManufact());
-            req.getRequestDispatcher("/editProd.jsp").forward(req, resp);
+            req.getRequestDispatcher(EDIT_PROD_JSP).forward(req, resp);
         } catch(Exception e) {
             req.setAttribute("errMessage", e.getMessage());
-            req.getRequestDispatcher("/error.jsp").forward(req, resp);
+            req.getRequestDispatcher(AbstractBaseServlet.ERROR_JSP).forward(req, resp);
         }
     }
 

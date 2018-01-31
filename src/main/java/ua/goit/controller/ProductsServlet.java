@@ -25,6 +25,6 @@ public class ProductsServlet extends HttpServlet {
     protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         List<Product> products = productDAO.getAll();
         req.setAttribute("prods", products);
-        req.getRequestDispatcher("/products.jsp").forward(req, resp);
+        req.getRequestDispatcher(AbstractBaseServlet.PRODUCTS_JSP).forward(req, resp);
     }
 }

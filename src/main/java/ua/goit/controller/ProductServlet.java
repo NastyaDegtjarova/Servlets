@@ -35,9 +35,9 @@ public class ProductServlet extends AbstractBaseServlet {
             Long id = Long.parseLong(req.getParameter("id"));
             Product product = productDAO.getById(id);
             req.setAttribute("prod", product);
-            req.getRequestDispatcher("/editProd.jsp").forward(req, resp);
+            req.getRequestDispatcher(EDIT_PROD_JSP).forward(req, resp);
         } catch (Exception e) {
-            req.getRequestDispatcher("/error.jsp").forward(req, resp);
+            req.getRequestDispatcher(ERROR_JSP).forward(req, resp);
         }
     }
 
@@ -59,7 +59,7 @@ public class ProductServlet extends AbstractBaseServlet {
             forwardToProds(req, resp);
         } catch (Exception e) {
             req.setAttribute("errMessage", e.getMessage());
-            req.getRequestDispatcher("/error.jsp").forward(req, resp);
+            req.getRequestDispatcher(ERROR_JSP).forward(req, resp);
         }
     }
 
@@ -73,14 +73,14 @@ public class ProductServlet extends AbstractBaseServlet {
         String manufIdParam = req.getParameter("manufId");
         if (manufIdParam == null || manufIdParam.isEmpty()) {
             req.setAttribute("errMessage", "manufId is empty");
-            req.getRequestDispatcher("/error.jsp").forward(req, resp);
+            req.getRequestDispatcher(ERROR_JSP).forward(req, resp);
             return;
         }
 
         String priceParam = req.getParameter("price");
         if (priceParam == null || priceParam.isEmpty()) {
             req.setAttribute("errMessage", "priceParam is empty");
-            req.getRequestDispatcher("/error.jsp").forward(req, resp);
+            req.getRequestDispatcher(ERROR_JSP).forward(req, resp);
             return;
         }
 
@@ -91,7 +91,7 @@ public class ProductServlet extends AbstractBaseServlet {
             forwardToProds(req, resp);
         } catch (Exception e) {
             req.setAttribute("errMessage", e.getMessage());
-            req.getRequestDispatcher("/error.jsp").forward(req, resp);
+            req.getRequestDispatcher(ERROR_JSP).forward(req, resp);
         }
     }
 
@@ -127,7 +127,7 @@ public class ProductServlet extends AbstractBaseServlet {
             forwardToProds(req, resp);
         } catch (Exception e) {
             req.setAttribute("errMessage", e.getMessage());
-            req.getRequestDispatcher("/error.jsp").forward(req, resp);
+            req.getRequestDispatcher(ERROR_JSP).forward(req, resp);
         }
     }
 }

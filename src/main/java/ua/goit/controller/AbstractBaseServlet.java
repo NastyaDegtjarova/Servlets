@@ -12,6 +12,9 @@ public abstract class AbstractBaseServlet extends HttpServlet {
     public static final String DELETE_ACTION = "delete";
     public static final String ACTION_PARAM = "action";
     public static final String ERROR_JSP = "/error.jsp";
+    public static final String EDIT_MANUF_JSP = "/editManuf.jsp";
+    public static final String EDIT_PROD_JSP = "/editProd.jsp";
+    public static final String PRODUCTS_JSP = "/products.jsp";
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
