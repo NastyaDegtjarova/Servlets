@@ -1,14 +1,10 @@
-package net.proselyte.dao;
+package ua.goit.dao;
 
 
-import net.proselyte.model.Manufacturer;
+import ua.goit.model.Manufacturer;
 
-import java.sql.SQLException;
 import java.util.List;
 
-/**
- * Created by Nastya on 20.11.2017.
- */
 public interface ManufacturerDAO {
     List<Manufacturer> getAll();
     void save(Manufacturer manufacturer);

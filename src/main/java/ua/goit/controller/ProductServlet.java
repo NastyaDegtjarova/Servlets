@@ -1,28 +1,25 @@
-package net.proselyte.controller;
+package ua.goit.controller;
 
-import net.proselyte.dao.ManufacturerDAO;
-import net.proselyte.dao.ProductDAO;
-import net.proselyte.dao.hibernate.HibernateManufacturerDAOImpl;
-import net.proselyte.dao.hibernate.HibernateProductDAOImpl;
-import net.proselyte.model.Manufacturer;
-import net.proselyte.model.Product;
+import ua.goit.dao.ManufacturerDAO;
+import ua.goit.dao.ProductDAO;
+import ua.goit.dao.hibernate.HibernateManufacturerDAOImpl;
+import ua.goit.dao.hibernate.HibernateProductDAOImpl;
+import ua.goit.model.Manufacturer;
+import ua.goit.model.Product;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.math.BigDecimal;
 
-/**
- * Created by Анастасия on 27.12.2017.
- */
 @WebServlet(urlPatterns = "/prod")
-public class ProductServlet extends HttpServlet {
-    private static final Logger logger = LogManager.getLogger(ProductServlet.class);
+public class ProductServlet extends AbstractBaseServlet {
+    private static final Logger LOGGER = LogManager.getLogger(ProductServlet.class);
+
     private ProductDAO productDAO = HibernateProductDAOImpl.getInstance();
     private ManufacturerDAO manufacturerDAO = HibernateManufacturerDAOImpl.getInstance();
 
@@ -48,37 +45,11 @@ public class ProductServlet extends HttpServlet {
         req.getRequestDispatcher("/prods").forward(req, resp);
     }
 
-    @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String action = req.getParameter("action");
-        if (action == null || action.isEmpty()) {
-            req.setAttribute("errMessage", "action is empty");
-            req.getRequestDispatcher("/error.jsp").forward(req, resp);
-            return;
-        }
-        switch (action) {
-            case "save":
-                save(req, resp);
-                break;
-            case "update":
-                update(req, resp);
-                break;
-            case "delete":
-                delete(req, resp);
-                break;
-            default:
-                req.setAttribute("errMessage", "action is wrong");
-                req.getRequestDispatcher("/error.jsp").forward(req, resp);
-                break;
-        }
-    }
-
-    private void delete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void delete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String idParam = req.getParameter("id");
-        logger.info("id = " + idParam);
+        LOGGER.info("id = " + idParam);
         if (idParam == null || idParam.isEmpty()) {
-            req.setAttribute("errMessage", "id is empty");
-            req.getRequestDispatcher("/error.jsp").forward(req, resp);
+            forwardToErrorPage(idParam, req, resp);
             return;
         }
         try {
@@ -92,11 +63,10 @@ public class ProductServlet extends HttpServlet {
         }
     }
 
-    private void save(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void save(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String name = req.getParameter("name");
         if (name == null || name.isEmpty()) {
-            req.setAttribute("errMessage", "name is empty");
-            req.getRequestDispatcher("/error.jsp").forward(req, resp);
+            forwardToErrorPage(name, req, resp);
             return;
         }
 
@@ -125,29 +95,25 @@ public class ProductServlet extends HttpServlet {
         }
     }
 
-    private void update(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void update(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String name = req.getParameter("name");
         if (name == null || name.isEmpty()) {
-            req.setAttribute("errMessage", "name is empty");
-            req.getRequestDispatcher("/error.jsp").forward(req, resp);
+            forwardToErrorPage(name, req, resp);
             return;
         }
         String idParam = req.getParameter("id");
         if (idParam == null || idParam.isEmpty()) {
-            req.setAttribute("errMessage", "id is empty");
-            req.getRequestDispatcher("/error.jsp").forward(req, resp);
+            forwardToErrorPage(idParam, req, resp);
             return;
         }
         String idManufactParam = req.getParameter("manufId");
         if (idManufactParam == null || idManufactParam.isEmpty()) {
-            req.setAttribute("errMessage", "id is empty");
-            req.getRequestDispatcher("/error.jsp").forward(req, resp);
+            forwardToErrorPage(idManufactParam, req, resp);
             return;
         }
         String priceProductParam = req.getParameter("price");
         if (priceProductParam == null || priceProductParam.isEmpty()) {
-            req.setAttribute("errMessage", "id is empty");
-            req.getRequestDispatcher("/error.jsp").forward(req, resp);
+            forwardToErrorPage(priceProductParam, req, resp);
             return;
         }
         try {

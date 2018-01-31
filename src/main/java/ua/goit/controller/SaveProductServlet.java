@@ -1,11 +1,10 @@
-package net.proselyte.controller;
+package ua.goit.controller;
 
-import net.proselyte.dao.ManufacturerDAO;
-import net.proselyte.dao.ProductDAO;
-import net.proselyte.dao.hibernate.HibernateManufacturerDAOImpl;
-import net.proselyte.dao.hibernate.HibernateProductDAOImpl;
-import net.proselyte.model.Manufacturer;
-import net.proselyte.model.Product;
+import ua.goit.dao.ManufacturerDAO;
+import ua.goit.dao.ProductDAO;
+import ua.goit.dao.hibernate.HibernateManufacturerDAOImpl;
+import ua.goit.dao.hibernate.HibernateProductDAOImpl;
+import ua.goit.model.Manufacturer;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -15,20 +14,15 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.math.BigDecimal;
 import java.util.List;
 
-/**
- * Created by Анастасия on 27.12.2017.
- */
 @WebServlet(urlPatterns = "/saveProd")
 public class SaveProductServlet extends HttpServlet {
-    private static final Logger logger = LogManager.getLogger(SaveProductServlet.class);
+    private static final Logger LOGGER = LogManager.getLogger(SaveProductServlet.class);
     private ProductDAO productDAO = HibernateProductDAOImpl.getInstance();
     private ManufacturerDAO manufacturerDAO = HibernateManufacturerDAOImpl.getInstance();
 
     @Override
-
     public void init() throws ServletException {
 
     }
@@ -39,6 +33,23 @@ public class SaveProductServlet extends HttpServlet {
             List<Manufacturer> manufacturers = manufacturerDAO.getAll();
             req.setAttribute("manufs", manufacturers);
             req.getRequestDispatcher("/saveProd.jsp").forward(req, resp);
+        } catch(Exception e) {
+            req.setAttribute("errMessage", e.getMessage());
+            req.getRequestDispatcher("/error.jsp").forward(req, resp);
+        }
+    }
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        try {
+            List<Manufacturer> manufacturers = manufacturerDAO.getAll();
+            req.setAttribute("manufs", manufacturers);
+            req.setAttribute("id", req.getParameter("id"));
+            req.setAttribute("name", req.getParameter("name"));
+            req.setAttribute("price", req.getParameter("price"));
+            Manufacturer manufacturer = manufacturerDAO.getById(Long.parseLong(req.getParameter("id")));
+            req.setAttribute("manufIdSelect", manufacturer.getIdManufact());
+            req.setAttribute("manufNameSelect", manufacturer.getNameManufact());
+            req.getRequestDispatcher("/editProd.jsp").forward(req, resp);
         } catch(Exception e) {
             req.setAttribute("errMessage", e.getMessage());
             req.getRequestDispatcher("/error.jsp").forward(req, resp);

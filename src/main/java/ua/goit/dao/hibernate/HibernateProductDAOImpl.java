@@ -1,34 +1,29 @@
-package net.proselyte.dao.hibernate;
+package ua.goit.dao.hibernate;
 
-import net.proselyte.dao.ManufacturerDAO;
-import net.proselyte.model.Manufacturer;
-import net.proselyte.model.Product;
+import ua.goit.dao.ProductDAO;
+import ua.goit.model.Product;
 import org.hibernate.*;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.query.Query;
 
-import java.sql.SQLException;
 import java.util.List;
 
-/**
- * Created by Nastya on 27.11.2017.
- */
-public class HibernateManufacturerDAOImpl implements ManufacturerDAO {
+public class HibernateProductDAOImpl implements ProductDAO {
     private SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
-    private static HibernateManufacturerDAOImpl instance = new HibernateManufacturerDAOImpl();
+    private static HibernateProductDAOImpl instance = new HibernateProductDAOImpl();
 
-    private HibernateManufacturerDAOImpl() {
+    private HibernateProductDAOImpl() {
     }
 
-    public static ManufacturerDAO getInstance() {
+    public static ProductDAO getInstance() {
         return instance;
     }
 
-    public void save(Manufacturer manufacturer) {
+    public void save(Product product) {
         Transaction transaction = null;
         try (Session session = this.sessionFactory.openSession()) {
             transaction = session.beginTransaction();
-            session.save(manufacturer);
+            session.save(product);
             transaction.commit();
         } catch (HibernateException e) {
             if (transaction != null) {
@@ -37,12 +32,12 @@ public class HibernateManufacturerDAOImpl implements ManufacturerDAO {
         }
     }
 
-    public void update(Manufacturer manufacturer) {
+    public void update(Product product) {
         Transaction transaction = null;
         try (Session session = this.sessionFactory.openSession()) {
             transaction = session.beginTransaction();
 
-            session.update(manufacturer);
+            session.update(product);
             transaction.commit();
         } catch (HibernateException e) {
             if (transaction != null) {
@@ -51,20 +46,22 @@ public class HibernateManufacturerDAOImpl implements ManufacturerDAO {
         }
     }
 
-    public Manufacturer getById(Long id) {
+    public Product getById(Long id) {
         try (Session session = this.sessionFactory.openSession()) {
-            Manufacturer manufacturer = session.get(Manufacturer.class, id);
-            Hibernate.initialize(manufacturer.getProducts());
-            return manufacturer;
+            Product product = session.get(Product.class, id);
+            if (product != null) {
+                Hibernate.initialize(product.getManufacturer());
+            }
+            return product;
         }
     }
 
-    public void delete(Manufacturer manufacturer) {
+    public void delete(Product product) {
         Transaction transaction = null;
         try (Session session = this.sessionFactory.openSession()) {
             transaction = session.beginTransaction();
 
-            session.delete(manufacturer);
+            session.delete(product);
             transaction.commit();
         } catch (HibernateException e) {
             if (transaction != null) {
@@ -73,12 +70,12 @@ public class HibernateManufacturerDAOImpl implements ManufacturerDAO {
         }
     }
 
-    public List<Manufacturer> getAll() {
+    public List<Product> getAll() {
         try (Session session = this.sessionFactory.openSession()) {
-            Query query = session.createQuery("FROM Manufacturer m");
-            List<Manufacturer> result = query.list();
-            for (Manufacturer manufacturer : result) {
-                Hibernate.initialize(manufacturer.getProducts());
+            Query query = session.createQuery("FROM Product p");
+            List<Product> result = query.list();
+            for (Product product : result) {
+                Hibernate.initialize(product.getManufacturer());
             }
             return result;
         }

@@ -1,4 +1,4 @@
-package net.proselyte.controller;
+package ua.goit.controller;
 
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
@@ -9,9 +9,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-/**
- * Created by Nastya on 13.12.2017.
- */
 public class FrontServlet extends HttpServlet {
     private SessionFactory sessionFactory;
     @Override

@@ -8,7 +8,7 @@
 
   <servlet>
     <servlet-name>serv</servlet-name>
-    <servlet-class>net.proselyte.controller.FrontServlet</servlet-class>
+    <servlet-class>ua.goit.controller.FrontServlet</servlet-class>
   </servlet>
 
 

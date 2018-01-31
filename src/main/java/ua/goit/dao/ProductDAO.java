@@ -1,13 +1,10 @@
-package net.proselyte.dao;
+package ua.goit.dao;
 
 
-import net.proselyte.model.Product;
+import ua.goit.model.Product;
 
 import java.util.List;
 
-/**
- * Created by Nastya on 21.11.2017.
- */
 public interface ProductDAO {
     List<Product> getAll();
     void save(Product manufacturer);

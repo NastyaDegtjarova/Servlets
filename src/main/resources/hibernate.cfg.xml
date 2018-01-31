@@ -12,7 +12,7 @@
         <property name="hibernate.connection.password">root</property>
         <!--<property name="hibernate.hbm2ddl.auto">update</property>-->
 
-        <mapping class="net.proselyte.model.Manufacturer"/>
-        <mapping class="net.proselyte.model.Product"/>
+        <mapping class="ua.goit.model.Manufacturer"/>
+        <mapping class="ua.goit.model.Product"/>
     </session-factory>
 </hibernate-configuration>

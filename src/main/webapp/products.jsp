@@ -25,7 +25,7 @@
                 <p>${prod.manufacturer.nameManufact}</p>
             </td>
             <td>
-                <form action="/prod" method="get">
+                <form action="/saveProd" method="post">
                     <input type="hidden" name="action" value="update"/>
                     <input type="hidden" name="id" value="${prod.idProduct}"/>
                     <input type="hidden" name="name" value="${prod.nameProduct}"/>

@@ -1,22 +1,18 @@
-package net.proselyte.model;
+package ua.goit.model;
 
 import javax.persistence.*;
-import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-/**
- * Created by Nastya on 20.11.2017.
- */
 @Entity
 @Table(name = "MANUFACTURER")
 public class Manufacturer {
     @Id
-    @Column(name = "ID_MANUFACTURER")
+    @Column(name = "ID")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idManufact;
 
-    @Column(name = "NAME_MANUFACTURER")
+    @Column(name = "NAME")
     private String nameManufact;
 
     @OneToMany(mappedBy = "manufacturer")
@@ -60,19 +56,6 @@ public class Manufacturer {
         return products;
     }
 
-    @Override
-    public String toString() {
-        return "Customer{" +
-                "idManufact =" + idManufact +
-                ", nameManufact ='" + nameManufact + '\'' +
-
-                ", projects='" +  (
-                products == null
-                        ? "[]"
-                        : products.stream().map(Product::getNameProduct).collect(Collectors.toList())) + '\'' +
-                '}';
-    }
-
     public Manufacturer withIdManufact(Long idManufact){
         this.idManufact = idManufact;
         return this;
@@ -85,5 +68,19 @@ public class Manufacturer {
 
     public void setProducts(Set<Product> products) {
         this.products = products;
+    }
+
+
+    @Override
+    public String toString() {
+        return "Customer{" +
+                "idManufact =" + idManufact +
+                ", nameManufact ='" + nameManufact + '\'' +
+
+                ", projects='" +  (
+                products == null
+                        ? "[]"
+                        : products.stream().map(Product::getNameProduct).collect(Collectors.toList())) + '\'' +
+                '}';
     }
 }

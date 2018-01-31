@@ -1,8 +1,8 @@
-package net.proselyte.controller;
+package ua.goit.controller;
 
-import net.proselyte.dao.ProductDAO;
-import net.proselyte.dao.hibernate.HibernateProductDAOImpl;
-import net.proselyte.model.Product;
+import ua.goit.dao.ProductDAO;
+import ua.goit.dao.hibernate.HibernateProductDAOImpl;
+import ua.goit.model.Product;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -12,9 +12,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
-/**
- * Created by Анастасия on 24.01.2018.
- */
 @WebServlet(urlPatterns = "/prods")
 public class ProductsServlet extends HttpServlet {
     private ProductDAO productDAO = HibernateProductDAOImpl.getInstance();

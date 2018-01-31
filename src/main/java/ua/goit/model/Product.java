@@ -1,29 +1,24 @@
-package net.proselyte.model;
+package ua.goit.model;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
-import java.util.List;
-import java.util.stream.Collectors;
 
-/**
- * Created by Nastya on 20.11.2017.
- */
 @Entity
 @Table(name = "PRODUCT")
 public class Product {
     @Id
-    @Column(name = "ID_PRODUCT")
+    @Column(name = "ID")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idProduct;
 
-    @Column(name = "NAME_PRODUCT")
+    @Column(name = "NAME")
     private String nameProduct;
 
-    @Column(name = "PRICE_PRODUCT")
+    @Column(name = "PRICE")
     private BigDecimal priceProduct = BigDecimal.ZERO;
 
     @ManyToOne
-    @JoinColumn(name="ID_MANUFACTURER", nullable=false)
+    @JoinColumn(nullable=false, name="ID_MANUFACTURER")
     private Manufacturer manufacturer;
 
     public Product() {
@@ -80,15 +75,6 @@ public class Product {
         this.manufacturer = manufacturer;
     }
 
-    @Override
-    public String toString() {
-        return "Product{" +
-                "idProduct=" + idProduct +
-                ", manufacturer='" + manufacturer +
-                ", nameComp ='" + nameProduct + '\'' +
-                '}';
-    }
-
     public Product withIdProduct(Long idProduct){
         this.idProduct = idProduct;
         return this;
@@ -96,6 +82,15 @@ public class Product {
     public Product withNameProduct(String nameProduct){
         this.nameProduct = nameProduct;
         return this;
+    }
+
+    @Override
+    public String toString() {
+        return "Product{" +
+                "idProduct=" + idProduct +
+                ", manufacturer='" + manufacturer +
+                ", nameComp ='" + nameProduct + '\'' +
+                '}';
     }
 
 }
