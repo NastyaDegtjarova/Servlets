@@ -16,6 +16,15 @@ public abstract class AbstractBaseServlet extends HttpServlet {
     public static final String EDIT_PROD_JSP = "/editProd.jsp";
     public static final String PRODUCTS_JSP = "/products.jsp";
 
+    public static final String MANUF_ATTR = "manuf";
+    public static final String ERR_MESSAGE_ATTR = "errMessage";
+    public static final String PROD_ATTR = "prod";
+
+    public static final String ID_PARAM = "id";
+    public static final String NAME_PARAM = "name";
+    public static final String MANUF_ID_PARAM = "manufId";
+    public static final String PRICE_PARAM = "price";
+
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String action = req.getParameter(ACTION_PARAM);

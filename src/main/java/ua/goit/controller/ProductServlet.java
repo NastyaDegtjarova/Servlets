@@ -1,5 +1,6 @@
 package ua.goit.controller;
 
+import org.apache.commons.lang.StringUtils;
 import ua.goit.dao.ManufacturerDAO;
 import ua.goit.dao.ProductDAO;
 import ua.goit.dao.hibernate.HibernateManufacturerDAOImpl;
@@ -32,9 +33,9 @@ public class ProductServlet extends AbstractBaseServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         try {
-            Long id = Long.parseLong(req.getParameter("id"));
+            Long id = Long.parseLong(req.getParameter(ID_PARAM));
             Product product = productDAO.getById(id);
-            req.setAttribute("prod", product);
+            req.setAttribute(PROD_ATTR, product);
             req.getRequestDispatcher(EDIT_PROD_JSP).forward(req, resp);
         } catch (Exception e) {
             req.getRequestDispatcher(ERROR_JSP).forward(req, resp);
@@ -46,9 +47,9 @@ public class ProductServlet extends AbstractBaseServlet {
     }
 
     protected void delete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String idParam = req.getParameter("id");
+        String idParam = req.getParameter(ProductServlet.ID_PARAM);
         LOGGER.info("id = " + idParam);
-        if (idParam == null || idParam.isEmpty()) {
+        if (StringUtils.isBlank(idParam)) {
             forwardToErrorPage(idParam, req, resp);
             return;
         }
@@ -58,29 +59,27 @@ public class ProductServlet extends AbstractBaseServlet {
             productDAO.delete(product);
             forwardToProds(req, resp);
         } catch (Exception e) {
-            req.setAttribute("errMessage", e.getMessage());
+            req.setAttribute(ERR_MESSAGE_ATTR, e.getMessage());
             req.getRequestDispatcher(ERROR_JSP).forward(req, resp);
         }
     }
 
     protected void save(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String name = req.getParameter("name");
-        if (name == null || name.isEmpty()) {
+        String name = req.getParameter(NAME_PARAM);
+        if (StringUtils.isBlank(name)) {
             forwardToErrorPage(name, req, resp);
             return;
         }
 
-        String manufIdParam = req.getParameter("manufId");
-        if (manufIdParam == null || manufIdParam.isEmpty()) {
-            req.setAttribute("errMessage", "manufId is empty");
-            req.getRequestDispatcher(ERROR_JSP).forward(req, resp);
+        String manufIdParam = req.getParameter(MANUF_ID_PARAM);
+        if (StringUtils.isBlank(manufIdParam)) {
+            forwardToErrorPage(manufIdParam, req, resp);
             return;
         }
 
-        String priceParam = req.getParameter("price");
-        if (priceParam == null || priceParam.isEmpty()) {
-            req.setAttribute("errMessage", "priceParam is empty");
-            req.getRequestDispatcher(ERROR_JSP).forward(req, resp);
+        String priceParam = req.getParameter(PRICE_PARAM);
+        if (StringUtils.isBlank(priceParam)) {
+            forwardToErrorPage(priceParam, req, resp);
             return;
         }
 
@@ -90,29 +89,29 @@ public class ProductServlet extends AbstractBaseServlet {
             productDAO.save(product);
             forwardToProds(req, resp);
         } catch (Exception e) {
-            req.setAttribute("errMessage", e.getMessage());
+            req.setAttribute(ERR_MESSAGE_ATTR, e.getMessage());
             req.getRequestDispatcher(ERROR_JSP).forward(req, resp);
         }
     }
 
     protected void update(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String name = req.getParameter("name");
-        if (name == null || name.isEmpty()) {
+        String name = req.getParameter(NAME_PARAM);
+        if (StringUtils.isBlank(name)) {
             forwardToErrorPage(name, req, resp);
             return;
         }
-        String idParam = req.getParameter("id");
-        if (idParam == null || idParam.isEmpty()) {
+        String idParam = req.getParameter(ID_PARAM);
+        if (StringUtils.isBlank(idParam)) {
             forwardToErrorPage(idParam, req, resp);
             return;
         }
-        String idManufactParam = req.getParameter("manufId");
-        if (idManufactParam == null || idManufactParam.isEmpty()) {
+        String idManufactParam = req.getParameter(MANUF_ID_PARAM);
+        if (StringUtils.isBlank(idManufactParam)) {
             forwardToErrorPage(idManufactParam, req, resp);
             return;
         }
-        String priceProductParam = req.getParameter("price");
-        if (priceProductParam == null || priceProductParam.isEmpty()) {
+        String priceProductParam = req.getParameter(PRICE_PARAM);
+        if (StringUtils.isBlank(priceProductParam)) {
             forwardToErrorPage(priceProductParam, req, resp);
             return;
         }
@@ -126,7 +125,7 @@ public class ProductServlet extends AbstractBaseServlet {
             productDAO.update(product);
             forwardToProds(req, resp);
         } catch (Exception e) {
-            req.setAttribute("errMessage", e.getMessage());
+            req.setAttribute(ERR_MESSAGE_ATTR, e.getMessage());
             req.getRequestDispatcher(ERROR_JSP).forward(req, resp);
         }
     }

@@ -1,5 +1,6 @@
 package ua.goit.controller;
 
+import org.apache.commons.lang.StringUtils;
 import ua.goit.dao.ManufacturerDAO;
 import ua.goit.dao.hibernate.HibernateManufacturerDAOImpl;
 import ua.goit.model.Manufacturer;
@@ -25,9 +26,9 @@ public class ManufacturerServlet extends AbstractBaseServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         try {
-            Long id = Long.parseLong(req.getParameter("id"));
+            Long id = Long.parseLong(req.getParameter(ID_PARAM));
             Manufacturer manufacturer = manufacturerDAO.getById(id);
-            req.setAttribute("manuf", manufacturer);
+            req.setAttribute(MANUF_ATTR, manufacturer);
             req.getRequestDispatcher(EDIT_MANUF_JSP).forward(req, resp);
         } catch(Exception e) {
             req.getRequestDispatcher(ERROR_JSP).forward(req, resp);
@@ -39,9 +40,9 @@ public class ManufacturerServlet extends AbstractBaseServlet {
     }
 
     protected void delete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String idParam = req.getParameter("id");
+        String idParam = req.getParameter(ID_PARAM);
         LOGGER.info("id = " + idParam);
-        if (idParam == null || idParam.isEmpty()) {
+        if (StringUtils.isBlank(idParam)) {
             forwardToErrorPage(idParam, req, resp);
             return;
         }
@@ -51,29 +52,29 @@ public class ManufacturerServlet extends AbstractBaseServlet {
             manufacturerDAO.delete(manufacturer);
             forwardToManufs(req, resp);
         } catch (Exception e) {
-            req.setAttribute("errMessage", e.getMessage());
+            req.setAttribute(ERR_MESSAGE_ATTR, e.getMessage());
             req.getRequestDispatcher(ERROR_JSP).forward(req, resp);
         }
     }
 
     protected void save(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String name = req.getParameter("name");
-        if (name != null && !name.isEmpty()) {
+        String name = req.getParameter(NAME_PARAM);
+        if (StringUtils.isBlank(name)) {
             manufacturerDAO.save(new Manufacturer(name));
         }
         forwardToManufs(req, resp);
     }
 
     protected void update(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String name = req.getParameter("name");
+        String name = req.getParameter(NAME_PARAM);
         LOGGER.info("name = " + name);
-        if (name == null || name.isEmpty()) {
+        if (StringUtils.isBlank(name)) {
             forwardToErrorPage(name, req, resp);
             return;
         }
-        String idParam = req.getParameter("id");
+        String idParam = req.getParameter(ID_PARAM);
         LOGGER.info("id = " + idParam);
-        if (idParam == null || idParam.isEmpty()) {
+        if (StringUtils.isBlank(idParam)) {
             forwardToErrorPage(idParam, req, resp);
             return;
         }
@@ -84,7 +85,7 @@ public class ManufacturerServlet extends AbstractBaseServlet {
             manufacturerDAO.update(manufacturer);
             forwardToManufs(req, resp);
         } catch (Exception e) {
-            req.setAttribute("errMessage", e.getMessage());
+            req.setAttribute(ERR_MESSAGE_ATTR, e.getMessage());
             req.getRequestDispatcher(ERROR_JSP).forward(req, resp);
         }
     }
