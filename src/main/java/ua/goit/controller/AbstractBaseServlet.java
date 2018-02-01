@@ -1,5 +1,7 @@
 package ua.goit.controller;
 
+import org.apache.commons.lang.StringUtils;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -28,9 +30,8 @@ public abstract class AbstractBaseServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String action = req.getParameter(ACTION_PARAM);
-        if (action == null || action.isEmpty()) {
-            req.setAttribute("errMessage", "action is empty");
-            req.getRequestDispatcher(ERROR_JSP).forward(req, resp);
+        if (StringUtils.isBlank(action)) {
+            forwardToErrorPage(action, req, resp);
             return;
         }
         switch (action) {

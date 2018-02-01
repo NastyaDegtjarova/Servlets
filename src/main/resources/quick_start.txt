@@ -1,0 +1,4 @@
+0. Checkout project from https://github.com/NastyaDegtjarova/Servlets
+1. Instal MySQL and Tomcat 
+2. Execute file createTables.sql in workbanch
+3. run application
