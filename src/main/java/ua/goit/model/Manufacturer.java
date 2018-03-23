@@ -28,8 +28,6 @@ public class Manufacturer {
     public Manufacturer(Long idManufact, String nameManufact) {
         this.idManufact = idManufact;
         this.nameManufact = nameManufact;
-
-
     }
 
     public Manufacturer(Long idManufact) {
