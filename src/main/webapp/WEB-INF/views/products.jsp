@@ -3,7 +3,7 @@
 <html>
 
 <head>
-    <title> Products </title>
+    <title>Products </title>
     <meta charset="UTF-8">
 </head>
 
@@ -25,7 +25,7 @@
                 <p>${prod.manufacturer.nameManufact}</p>
             </td>
             <td>
-                <form action="/saveProd" method="post">
+                <form action="/products/save" method="get">
                     <input type="hidden" name="action" value="update"/>
                     <input type="hidden" name="id" value="${prod.idProduct}"/>
                     <input type="hidden" name="name" value="${prod.nameProduct}"/>
@@ -35,7 +35,7 @@
                 </form>
             </td>
             <td>
-                <form action="/prod" method="post">
+                <form action="/products/delete" method="get">
                     <input type="hidden" name="action" value="delete"/>
                     <input type="hidden" name="id" value="${prod.idProduct}"/>
                     <input type="submit" value="Delete"/>
@@ -45,7 +45,7 @@
     </c:forEach>
 
 </table>
-<form action="/saveProd" method="get">
+<form action="/products/save" method="get">
     <input type="hidden" name="action" value="save"/>
     <input type="submit" value="New product"/>
 </form>

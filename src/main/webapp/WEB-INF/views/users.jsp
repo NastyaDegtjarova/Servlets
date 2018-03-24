@@ -17,13 +17,13 @@
             <p>${user.firstName}</p>
         </td>
         <td>
-            <form action = "/user" method="get">
+            <form action = "/users/edit" method="get">
                 <input type = "submit" value = "Edit"/>
                 <input type="hidden" name="id" value="${user.id}"/>
             </form>
         </td>
         <td>
-            <form action = "/user" method="post">
+            <form action = "/users/delete" method="get">
                 <input type = "hidden" name="action" value = "delete"/>
                 <input type = "hidden" name="id" value="${user.id}"/>
                 <input type = "submit" value = "Delete"/>
@@ -33,7 +33,7 @@
      </c:forEach>
 
 </table>
-            <form action = "/saveUser.jsp" method="post">
+            <form action = "/users/save" method="get">
                 <input type = "hidden" name="action" value = "save"/>
                 <input type = "submit" value = "New user"/>
             </form>
