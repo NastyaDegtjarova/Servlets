@@ -17,24 +17,28 @@ import java.util.List;
 
 @Controller
 @RequestMapping(value = "/products")
-public class ProductController {
+public class ProductController extends BaseController{
+
+    private ProductService productService;
 
     @Autowired
-    private ProductService productService;
+    public ProductController(ProductService productService) {
+        this.productService = productService;
+    }
 
     @RequestMapping(value = "/get", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public String getProduct(@PathVariable("productId") Long productId) {
         if (productId == null) {
-            return "error";
+            return ERROR_JSP;
         }
 
         Product product = this.productService.getById(productId);
 
         if (product == null) {
-            return "error";
+            return ERROR_JSP;
         }
 
-        return "products";
+        return PRODUCTS_JSP;
     }
 
     @RequestMapping(value = "/getAll", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
@@ -42,10 +46,10 @@ public class ProductController {
         List<Product> productList = this.productService.getAll();
 
         if (productList.isEmpty()) {
-            return "error";
+            return ERROR_JSP;
         }
         model.put("prods", productList);
-        return "products";
+        return PRODUCTS_JSP;
     }
 
     @RequestMapping(value = "/delete", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
@@ -53,12 +57,12 @@ public class ProductController {
         Product product = this.productService.getById(prodId);
 
         if (product == null) {
-            return "error";
+            return ERROR_JSP;
         }
 
         this.productService.delete(prodId);
 
-        return "products";
+        return PRODUCTS_JSP;
     }
 
     @RequestMapping(value = "/save", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
@@ -66,11 +70,11 @@ public class ProductController {
         HttpHeaders headers = new HttpHeaders();
 
         if (product == null) {
-            return "error";
+            return ERROR_JSP;
         }
 
         this.productService.save(product);
-        return "products";
+        return PRODUCTS_JSP;
     }
 
     @RequestMapping(value = "/update", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
@@ -78,11 +82,11 @@ public class ProductController {
         HttpHeaders headers = new HttpHeaders();
 
         if (product == null) {
-            return "error";
+            return ERROR_JSP;
         }
 
         this.productService.save(product);
-        return "products";
+        return PRODUCTS_JSP;
     }
 
 }

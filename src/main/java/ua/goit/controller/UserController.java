@@ -15,35 +15,39 @@ import java.util.List;
 
 @Controller
 @RequestMapping(value = "/users")
-public class UserRestController {
+public class UserController extends BaseController {
+
+    private UserService userService;
 
     @Autowired
-    private UserService userService;
+    public UserController(UserService userService) {
+        this.userService = userService;
+    }
 
     @RequestMapping(value = "/getAll", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public String getAllUsers() {
         List<User> userList = this.userService.getAll();
 
         if (userList.isEmpty()) {
-            return "error";
+            return ERROR_JSP;
         }
 
-        return "users";
+        return USERS_JSP;
     }
 
     @RequestMapping(value = "/get", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public String getUser(@PathVariable("userId") Long userId) {
         if (userId == null) {
-            return "error";
+            return ERROR_JSP;
         }
 
         User user = this.userService.getById(userId);
 
         if (user == null) {
-            return "error";
+            return ERROR_JSP;
         }
 
-        return "users";
+        return USERS_JSP;
     }
 
     @RequestMapping(value = "/save", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
@@ -51,12 +55,11 @@ public class UserRestController {
         HttpHeaders headers = new HttpHeaders();
 
         if (user == null) {
-            return "error";
+            return ERROR_JSP;
         }
 
         this.userService.save(user);
-//        headers.setLocation(builder.path("/api/users/{userId}").buildAndExpand(user.getId()).toUri());
-        return "users";
+        return USERS_JSP;
     }
 
     @RequestMapping(value = "/delete", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
@@ -64,12 +67,12 @@ public class UserRestController {
         User user = this.userService.getById(userId);
 
         if (user == null) {
-            return "error";
+            return ERROR_JSP;
         }
 
         this.userService.delete(userId);
 
-        return "users";
+        return USERS_JSP;
     }
 
 }

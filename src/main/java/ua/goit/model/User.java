@@ -5,10 +5,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "users")
-public class User {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class User extends BaseEntity{
 
     @Column(name = "USERNAME")
     private String username;
@@ -33,7 +30,7 @@ public class User {
     @Override
     public String toString() {
         final StringBuilder sb = new StringBuilder("User{");
-        sb.append("id=").append(id);
+        sb.append("id=").append(getId());
         sb.append(", username='").append(username).append('\'').append('\n');
         sb.append(", enabled=").append(enabled);
         sb.append(", roles=").append(roles);
@@ -79,9 +76,5 @@ public class User {
 
     public void setEnabled(Boolean enabled) {
         this.enabled = enabled;
-    }
-
-    public Long getId() {
-        return id;
     }
 }

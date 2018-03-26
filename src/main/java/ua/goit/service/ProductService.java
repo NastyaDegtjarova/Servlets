@@ -1,15 +1,16 @@
 package ua.goit.service;
 
 import ua.goit.model.Product;
+import ua.goit.service.impl.BaseServise;
 
 import java.util.List;
 
-public interface ProductService {
+public interface ProductService extends BaseServise<Product> {
     List<Product> getAll();
 
     Product getById(Long id);
 
-    Product save(Product entity);
+    void save(Product entity);
 
     void delete(Long id);
 

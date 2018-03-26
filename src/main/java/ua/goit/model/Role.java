@@ -4,11 +4,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "roles")
-public class Role {
-    @Id
-    @Column(name = "ID")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class Role extends BaseEntity{
 
     @Column(name = "NAME")
     private String name;
@@ -19,7 +15,7 @@ public class Role {
     @Override
     public String toString() {
         return "Role{" +
-                "id=" + id +
+                "id=" + getId() +
                 ", name='" + name + '\'' +
                 '}';
     }
@@ -30,9 +26,5 @@ public class Role {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public Object getId() {
-        return id;
     }
 }

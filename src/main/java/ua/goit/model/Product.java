@@ -5,11 +5,7 @@ import java.math.BigDecimal;
 
 @Entity
 @Table(name = "PRODUCT")
-public class Product {
-    @Id
-    @Column(name = "ID")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long idProduct;
+public class Product extends BaseEntity{
 
     @Column(name = "NAME")
     private String nameProduct;
@@ -28,27 +24,10 @@ public class Product {
         this.nameProduct = nameProduct;
     }
 
-    public Product(Long idProduct, String nameProduct) {
-        this.idProduct = idProduct;
-        this.nameProduct = nameProduct;
-    }
-
     public Product(String nameProduct, BigDecimal priceProduct, Manufacturer manufacturer) {
         this.nameProduct = nameProduct;
         this.priceProduct = priceProduct;
         this.manufacturer = manufacturer;
-    }
-
-    public Product(Long idProduct) {
-        this.idProduct = idProduct;
-    }
-
-    public Long getIdProduct() {
-        return idProduct;
-    }
-
-    public void setIdProduct(Long idProduct) {
-        this.idProduct = idProduct;
     }
 
     public String getNameProduct() {
@@ -75,10 +54,6 @@ public class Product {
         this.manufacturer = manufacturer;
     }
 
-    public Product withIdProduct(Long idProduct){
-        this.idProduct = idProduct;
-        return this;
-    }
     public Product withNameProduct(String nameProduct){
         this.nameProduct = nameProduct;
         return this;
@@ -87,7 +62,7 @@ public class Product {
     @Override
     public String toString() {
         return "Product{" +
-                "idProduct=" + idProduct +
+                "idProduct=" + getId() +
                 ", manufacturer='" + manufacturer +
                 ", nameComp ='" + nameProduct + '\'' +
                 '}';

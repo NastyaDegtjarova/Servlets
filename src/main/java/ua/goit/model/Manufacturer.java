@@ -6,11 +6,7 @@ import java.util.stream.Collectors;
 
 @Entity
 @Table(name = "MANUFACTURER")
-public class Manufacturer {
-    @Id
-    @Column(name = "ID")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long idManufact;
+public class Manufacturer extends BaseEntity{
 
     @Column(name = "NAME")
     private String nameManufact;
@@ -25,22 +21,6 @@ public class Manufacturer {
         this.nameManufact = nameManufact;
     }
 
-    public Manufacturer(Long idManufact, String nameManufact) {
-        this.idManufact = idManufact;
-        this.nameManufact = nameManufact;
-    }
-
-    public Manufacturer(Long idManufact) {
-        this.idManufact = idManufact;
-    }
-
-    public Long getIdManufact() {
-        return idManufact;
-    }
-
-    public void setIdManufact(Long idManufact) {
-        this.idManufact = idManufact;
-    }
 
     public String getNameManufact() {
         return nameManufact;
@@ -54,10 +34,6 @@ public class Manufacturer {
         return products;
     }
 
-    public Manufacturer withIdManufact(Long idManufact){
-        this.idManufact = idManufact;
-        return this;
-    }
 
     public Manufacturer withNameManufact(String nameManufact){
         this.nameManufact = nameManufact;
@@ -72,7 +48,7 @@ public class Manufacturer {
     @Override
     public String toString() {
         return "Customer{" +
-                "idManufact =" + idManufact +
+                "idManufact =" + getId() +
                 ", nameManufact ='" + nameManufact + '\'' +
 
                 ", projects='" +  (

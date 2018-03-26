@@ -17,35 +17,38 @@ import java.util.List;
 
 @Controller
 @RequestMapping(value = "/manufacts")
-public class ManufacturerController {
+public class ManufacturerController extends BaseController{
 
-    @Autowired
     private ManufacturerService manufacturerService;
+    @Autowired
+    public ManufacturerController(ManufacturerService manufacturerService) {
+        this.manufacturerService = manufacturerService;
+    }
 
     @RequestMapping(value = "/getAll", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public String getAllManufacturers(ModelMap model) {
         List<Manufacturer> manufacturerList = this.manufacturerService.getAll();
 
         if (manufacturerList.isEmpty()) {
-            return "error";
+            return ERROR_JSP;
         }
 
-        return "manufacts";
+        return MANUFACTS_JSP;
     }
 
     @RequestMapping(value = "/get", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public String getManufacturer(@PathVariable("manufId") Long manufId) {
         if (manufId == null) {
-            return "error";
+            return ERROR_JSP;
         }
 
         Manufacturer manufacturer = this.manufacturerService.getById(manufId);
 
         if (manufacturer == null) {
-            return "error";
+            return ERROR_JSP;
         }
 
-        return "manufacts";
+        return MANUFACTS_JSP;
     }
 
     @RequestMapping(value = "/delete", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
@@ -53,24 +56,24 @@ public class ManufacturerController {
         Manufacturer manufacturer = this.manufacturerService.getById(manufId);
 
         if (manufacturer == null) {
-            return "error";
+            return ERROR_JSP;
         }
 
         this.manufacturerService.delete(manufId);
 
-        return "manufacts";
+        return MANUFACTS_JSP;
     }
 
 
     @RequestMapping(value = "/save", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public String saveManufacturer(@RequestBody Manufacturer manufacturer, UriComponentsBuilder builder) {
         if (manufacturer == null) {
-            return "error";
+            return ERROR_JSP;
         }
 
         this.manufacturerService.save(manufacturer);
 
-        return "manufacts";
+        return MANUFACTS_JSP;
     }
 
     @RequestMapping(value = "/update", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
@@ -78,12 +81,11 @@ public class ManufacturerController {
 
 
         if (manufacturer == null) {
-            return "error";
+            return ERROR_JSP;
         }
 
         this.manufacturerService.update(manufacturer);
-//        headers.setLocation(builder.path("/api/manufs/{manufId}").buildAndExpand(manufacturer.getId()).toUri());
-        return "manufacts";
+        return MANUFACTS_JSP;
     }
 
 }

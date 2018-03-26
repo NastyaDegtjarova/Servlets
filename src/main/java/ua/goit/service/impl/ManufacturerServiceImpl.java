@@ -11,8 +11,12 @@ import java.util.List;
 @Service
 public class ManufacturerServiceImpl implements ManufacturerService {
 
-    @Autowired
     private ManufacturerRepository manufacturerRepository;
+
+    @Autowired
+    public ManufacturerServiceImpl(ManufacturerRepository manufacturerRepository) {
+        this.manufacturerRepository = manufacturerRepository;
+    }
 
     @Override
     public Manufacturer getById(Long manufId) {
@@ -30,8 +34,8 @@ public class ManufacturerServiceImpl implements ManufacturerService {
     }
 
     @Override
-    public void update(Manufacturer manufacturer) {
-         manufacturerRepository.save(manufacturer);
+    public Manufacturer update(Manufacturer manufacturer) {
+         return manufacturerRepository.save(manufacturer);
     }
 
     @Override

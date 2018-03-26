@@ -15,35 +15,39 @@ import java.util.List;
 
 @Controller
 @RequestMapping(value = "/roles")
-public class RoleRestController {
+public class RoleController extends BaseController {
+
+        private RoleService roleService;
 
     @Autowired
-    private RoleService roleService;
+    public RoleController(RoleService roleService) {
+        this.roleService = roleService;
+    }
 
     @RequestMapping(value = "/getAll", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public String getAllRoles() {
         List<Role> roleList = this.roleService.getAll();
 
         if (roleList.isEmpty()) {
-            return "error";
+            return ERROR_JSP;
         }
 
-        return "roles";
+        return ROLES_JSP;
     }
 
     @RequestMapping(value = "/get", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public String getRole(@PathVariable("roleId") Long roleId) {
         if (roleId == null) {
-            return "error";
+            return ERROR_JSP;
         }
 
         Role role = this.roleService.getById(roleId);
 
         if (role == null) {
-            return "error";
+            return ERROR_JSP;
         }
 
-        return "roles";
+        return ROLES_JSP;
     }
 
     @RequestMapping(value = "/save", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
@@ -51,12 +55,11 @@ public class RoleRestController {
         HttpHeaders headers = new HttpHeaders();
 
         if (role == null) {
-            return "error";
+            return ERROR_JSP;
         }
 
         this.roleService.save(role);
-//        headers.setLocation(builder.path("/api/roles/{roleId}").buildAndExpand(role.getId()).toUri());
-        return "roles";
+        return ROLES_JSP;
     }
 
     @RequestMapping(value = "/delete", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
@@ -64,12 +67,12 @@ public class RoleRestController {
         Role role = this.roleService.getById(roleId);
 
         if (role == null) {
-            return "error";
+            return ERROR_JSP;
         }
 
         this.roleService.delete(roleId);
 
-        return "roles";
+        return ROLES_JSP;
     }
 
 }
