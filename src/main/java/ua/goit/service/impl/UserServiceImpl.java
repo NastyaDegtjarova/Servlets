@@ -12,8 +12,8 @@ import java.util.List;
 @Service
 public class UserServiceImpl implements UserService {
 
-    private UserRepository userRepository;
-    private RoleRepository roleRepository;
+    private final UserRepository userRepository;
+    private final RoleRepository roleRepository;
 
     @Autowired
     public UserServiceImpl(UserRepository userRepository, RoleRepository roleRepository) {

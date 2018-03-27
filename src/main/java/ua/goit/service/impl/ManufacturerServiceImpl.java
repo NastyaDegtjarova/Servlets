@@ -11,7 +11,7 @@ import java.util.List;
 @Service
 public class ManufacturerServiceImpl implements ManufacturerService {
 
-    private ManufacturerRepository manufacturerRepository;
+    private final ManufacturerRepository manufacturerRepository;
 
     @Autowired
     public ManufacturerServiceImpl(ManufacturerRepository manufacturerRepository) {
